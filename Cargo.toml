@@ -28,7 +28,7 @@ rs485 = ["serial2/rs4xx"]
 coqui-builder = { git = "https://github.com/Boriken-Dev/coqui-builder", rev = "c1875f8276bd6366c38e9133fdb1181a0ffbaaad", features = ["derive"] }
 # `Split`, `Codec`, `Decode` and `Connector`, which a serial port and its framing implement. The family has no
 # releases for now: its crates depend on each other by git revision.
-coqui-transport = { git = "https://github.com/Boriken-Dev/coqui-transport", rev = "96fddc687bcd8fb8f1e6b63ee9447703e90ec3f1", default-features = false }
+coqui-transport = { git = "https://github.com/Boriken-Dev/coqui-transport", rev = "e8ba786e29f4acb4d1d181a076d3d331d175d2aa", default-features = false }
 # The port. Four dependencies of its own, `&self` reads and writes, timeouts on every platform and RS-485 on Linux;
 # the measurement against `serialport` and `tokio-serial` is in the repository's documentation.
 serial2 = { version = "0.2.39", features = ["unix", "windows"] }

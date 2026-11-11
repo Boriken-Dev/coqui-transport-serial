@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Tests of `coqui-transport`'s versioned frame (`mux::Mux`) over `Cobs`: through a wire that damages a frame, where a message channel
+  ends with `Failure::Protocol` and a datagram is lost and counted, and over a pseudo-terminal pair.
+
 - `Serial`: a serial port (a Windows COM port, a Unix tty device, a pseudo-terminal) as a `coqui_transport::Split`
   stream, so `StreamChannel::start(port, codec)` is a channel of whole messages on it. `Serial::open(path)`, `SerialBuilder`
   with the settings by name (`baud_rate`, `data_bits`, `parity`, `stop_bits`, `flow_control`, `transceiver`,

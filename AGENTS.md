@@ -9,7 +9,7 @@ Development documentation lives with the source at <https://github.com/Boriken-D
 | `rs485` | `serial2/rs4xx` | `Transceiver::Rs422`, `Rs485`, `Rs485FullDuplex` (Linux only; refused with `Unsupported` otherwise) | off |
 
 MSRV Rust 1.89. A default build depends on `coqui-builder` (by git revision, `derive`), `coqui-transport` (by git revision,
-`96fddc6`, no features), `serial2` 0.2 (itself `libc` and `windows-sys`), `cobs` 0.5 and `crc` 3. Version `0.0.0-alpha.0`,
+`e8ba786`, no features), `serial2` 0.2 (itself `libc` and `windows-sys`), `cobs` 0.5 and `crc` 3. Version `0.0.0-alpha.0`,
 unreleased: depend on a git revision, and name the same `coqui-builder` and `coqui-transport` revisions if you use them directly.
 
 Imports: the crate root holds `Serial`, `SerialBuilder`, `SerialParts`, `SerialSettings`, `Connector`, `Lines`, `ReadHalf`,
@@ -87,6 +87,12 @@ of COBS for data ending on a full 254-byte run decode alike. Damage is therefore
 lost, and the channel goes on. `Cobs` is the channel's only framing: do not put `LengthPrefix` under it.
 
 ## Gotchas
+
+- **The versioned frame over `Cobs`.** `coqui_transport::mux::Mux::start(StreamChannel::start(port, Cobs::new())?)` runs logical channels
+  and over-stream datagrams on a port (`coqui-transport`'s `docs/frame.md`). The frame has its own CRC-32C, redundant here (4 bytes);
+  `Cobs` drops a damaged frame first, so the multiplexer sees a gap: a message channel ends with `Failure::Protocol`, a datagram is lost and
+  counted (`Mux::counters().lost_datagrams`, beside `Counters::corrupt`). `tests/mux.rs` runs it over a damaging in-memory wire and, on Unix, a
+  pseudo-terminal pair.
 
 - **A serial line has no end of stream.** Closing a channel sends nothing; the peer's `receive` does not return `Ok(None)`. A protocol
   that needs a close sends one as a message. (A pseudo-terminal pair does hang up when one end closes; a cable does not.)
