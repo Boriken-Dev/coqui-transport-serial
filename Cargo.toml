@@ -1,0 +1,55 @@
+[package]
+name = "coqui-transport-serial"
+version = "0.0.0-alpha.0"
+description = "Serial ports as a coqui-transport stream, with a COBS and CRC-32C framing that detects damage on the line and carries on after it"
+readme = "README.md"
+edition = "2024"
+rust-version = "1.89"
+license = "MPL-2.0"
+repository = "https://github.com/Boriken-Dev/coqui-transport-serial"
+homepage = "https://boriken-dev.github.io/coqui-transport-serial/"
+keywords = ["serial", "uart", "rs-232", "rs-485", "transport"]
+categories = ["hardware-support", "network-programming"]
+exclude = [".*", "*.local.*", "/tools/"]
+# Nothing is published until the owner chooses a release.
+publish = false
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[features]
+default = []
+# `Transceiver::Rs422`, `Rs485` and `Rs485FullDuplex`, which the Linux kernel's serial driver applies.
+rs485 = ["serial2/rs4xx"]
+
+[dependencies]
+# The settings types, their builders and the non-default report. By revision, as the family pins it.
+coqui-builder = { git = "https://github.com/Boriken-Dev/coqui-builder", rev = "c1875f8276bd6366c38e9133fdb1181a0ffbaaad", features = ["derive"] }
+# `Split`, `Codec`, `Decode` and `Connector`, which a serial port and its framing implement. The family has no
+# releases for now: its crates depend on each other by git revision.
+coqui-transport = { git = "https://github.com/Boriken-Dev/coqui-transport", rev = "96fddc687bcd8fb8f1e6b63ee9447703e90ec3f1", default-features = false }
+# The port. Four dependencies of its own, `&self` reads and writes, timeouts on every platform and RS-485 on Linux;
+# the measurement against `serialport` and `tokio-serial` is in the repository's documentation.
+serial2 = { version = "0.2.39", features = ["unix", "windows"] }
+# Consistent overhead byte stuffing, the framing's escape.
+cobs = { version = "0.5.1", default-features = false, features = ["alloc"] }
+# CRC-32C, the framing's check.
+crc = "3.4"
+
+[dev-dependencies]
+# Settings read from TOML text in tests.
+coqui-builder = { git = "https://github.com/Boriken-Dev/coqui-builder", rev = "c1875f8276bd6366c38e9133fdb1181a0ffbaaad", features = ["derive", "serde"] }
+toml = "1"
+serde_json = "1"
+# Arbitrary messages, damage and chunkings.
+proptest = { version = "1", default-features = false, features = ["std"] }
+
+[target.'cfg(unix)'.dev-dependencies]
+# A pseudo-terminal whose slave is a path, for opening by name.
+rustix = { version = "1", default-features = false, features = ["std", "pty", "fs", "termios"] }
+
+[lints.rust]
+missing_docs = "warn"
+missing_debug_implementations = "warn"
+unsafe_code = "forbid"
