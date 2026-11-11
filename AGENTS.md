@@ -9,7 +9,7 @@ Development documentation lives with the source at <https://github.com/Boriken-D
 | `rs485` | `serial2/rs4xx` | `Transceiver::Rs422`, `Rs485`, `Rs485FullDuplex` (Linux only; refused with `Unsupported` otherwise) | off |
 
 MSRV Rust 1.89. A default build depends on `coqui-builder` (by git revision, `derive`), `coqui-transport` (by git revision,
-`e8ba786`, no features), `serial2` 0.2 (itself `libc` and `windows-sys`), `cobs` 0.5 and `crc` 3. Version `0.0.0-alpha.0`,
+`2601da5`, no features), `serial2` 0.2 (itself `libc` and `windows-sys`), `cobs` 0.5 and `crc` 3. Version `0.0.0-alpha.0`,
 unreleased: depend on a git revision, and name the same `coqui-builder` and `coqui-transport` revisions if you use them directly.
 
 Imports: the crate root holds `Serial`, `SerialBuilder`, `SerialParts`, `SerialSettings`, `Connector`, `Lines`, `ReadHalf`,
