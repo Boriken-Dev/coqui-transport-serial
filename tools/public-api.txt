@@ -1,0 +1,126 @@
+pub mod coqui_transport_serial
+pub use coqui_transport_serial::BuildError
+pub use coqui_transport_serial::Missing
+pub use coqui_transport_serial::NonDefault
+pub mod coqui_transport_serial::prelude
+pub trait coqui_transport_serial::prelude::SerialSettingsSetters: coqui_builder::builder::Holds<coqui_transport_serial::SerialSettings> + core::marker::Sized
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::baud_rate(self, u32) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::data_bits(self, impl core::convert::Into<coqui_transport_serial::DataBits>) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::discard_input(self, bool) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::dtr(self, impl core::convert::Into<core::option::Option<bool>>) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::flow_control(self, impl core::convert::Into<coqui_transport_serial::FlowControl>) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::parity(self, impl core::convert::Into<coqui_transport_serial::Parity>) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::rts(self, impl core::convert::Into<core::option::Option<bool>>) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::stop_bits(self, impl core::convert::Into<coqui_transport_serial::StopBits>) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::transceiver(self, impl core::convert::Into<coqui_transport_serial::Transceiver>) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::wake(self, impl core::convert::Into<core::time::Duration>) -> Self
+pub fn coqui_transport_serial::prelude::SerialSettingsSetters::write_timeout(self, impl core::convert::Into<core::time::Duration>) -> Self
+#[non_exhaustive] pub enum coqui_transport_serial::DataBits
+pub coqui_transport_serial::DataBits::Eight
+pub coqui_transport_serial::DataBits::Five
+pub coqui_transport_serial::DataBits::Seven
+pub coqui_transport_serial::DataBits::Six
+#[non_exhaustive] pub enum coqui_transport_serial::FlowControl
+pub coqui_transport_serial::FlowControl::Hardware
+pub coqui_transport_serial::FlowControl::None
+pub coqui_transport_serial::FlowControl::Software
+#[non_exhaustive] pub enum coqui_transport_serial::Parity
+pub coqui_transport_serial::Parity::Even
+pub coqui_transport_serial::Parity::None
+pub coqui_transport_serial::Parity::Odd
+#[non_exhaustive] pub enum coqui_transport_serial::StopBits
+pub coqui_transport_serial::StopBits::One
+pub coqui_transport_serial::StopBits::Two
+#[non_exhaustive] pub enum coqui_transport_serial::Transceiver
+pub coqui_transport_serial::Transceiver::Default
+pub coqui_transport_serial::Transceiver::Rs422
+pub coqui_transport_serial::Transceiver::Rs485
+pub coqui_transport_serial::Transceiver::Rs485FullDuplex
+pub struct coqui_transport_serial::Cobs
+impl coqui_transport_serial::Cobs
+pub fn coqui_transport_serial::Cobs::counters(&self) -> coqui_transport_serial::Counters
+pub fn coqui_transport_serial::Cobs::new() -> Self
+impl coqui_transport::frame::Codec for coqui_transport_serial::Cobs
+pub type coqui_transport_serial::Cobs::Decoder = coqui_transport_serial::CobsDecoder
+pub fn coqui_transport_serial::Cobs::decoder(&self, usize) -> coqui_transport_serial::CobsDecoder
+pub fn coqui_transport_serial::Cobs::encode(&self, &[u8], usize) -> core::result::Result<alloc::vec::Vec<u8>, coqui_transport::frame::FrameError>
+pub struct coqui_transport_serial::CobsDecoder
+impl coqui_transport::frame::Decode for coqui_transport_serial::CobsDecoder
+pub fn coqui_transport_serial::CobsDecoder::buffered(&self) -> usize
+pub fn coqui_transport_serial::CobsDecoder::next_frame(&mut self) -> core::result::Result<core::option::Option<alloc::vec::Vec<u8>>, coqui_transport::frame::FrameError>
+pub fn coqui_transport_serial::CobsDecoder::push(&mut self, &[u8])
+pub fn coqui_transport_serial::CobsDecoder::set_maximum(&mut self, usize)
+pub struct coqui_transport_serial::Connector
+impl coqui_transport_serial::Connector
+pub fn coqui_transport_serial::Connector::new(impl core::convert::Into<std::path::PathBuf>) -> Self
+pub fn coqui_transport_serial::Connector::path(&self) -> &std::path::Path
+pub const fn coqui_transport_serial::Connector::settings(self, coqui_transport_serial::SerialSettings) -> Self
+impl coqui_transport::connector::Connector for coqui_transport_serial::Connector
+pub type coqui_transport_serial::Connector::Connection = coqui_transport_serial::Serial
+pub type coqui_transport_serial::Connector::Error = core::io::error::Error
+pub fn coqui_transport_serial::Connector::connect(&self, core::time::Duration) -> core::io::error::Result<coqui_transport_serial::Serial>
+pub struct coqui_transport_serial::Counters
+impl coqui_transport_serial::Counters
+pub fn coqui_transport_serial::Counters::corrupt(&self) -> u64
+pub fn coqui_transport_serial::Counters::delivered(&self) -> u64
+pub fn coqui_transport_serial::Counters::oversized(&self) -> u64
+pub struct coqui_transport_serial::Lines
+impl coqui_transport_serial::Lines
+pub fn coqui_transport_serial::Lines::read_cd(&self) -> core::io::error::Result<bool>
+pub fn coqui_transport_serial::Lines::read_cts(&self) -> core::io::error::Result<bool>
+pub fn coqui_transport_serial::Lines::read_dsr(&self) -> core::io::error::Result<bool>
+pub fn coqui_transport_serial::Lines::read_ri(&self) -> core::io::error::Result<bool>
+pub fn coqui_transport_serial::Lines::set_dtr(&self, bool) -> core::io::error::Result<()>
+pub fn coqui_transport_serial::Lines::set_rts(&self, bool) -> core::io::error::Result<()>
+pub struct coqui_transport_serial::ReadHalf
+impl alloc::io::read::Read for coqui_transport_serial::ReadHalf
+pub fn coqui_transport_serial::ReadHalf::read(&mut self, &mut [u8]) -> core::io::error::Result<usize>
+pub struct coqui_transport_serial::Serial
+impl coqui_transport_serial::Serial
+pub const coqui_transport_serial::Serial::DEFAULT_BAUD_RATE: u32
+pub const coqui_transport_serial::Serial::DEFAULT_WAKE: core::time::Duration
+pub const coqui_transport_serial::Serial::DEFAULT_WRITE_TIMEOUT: core::time::Duration
+impl coqui_transport_serial::Serial
+pub fn coqui_transport_serial::Serial::lines(&self) -> coqui_transport_serial::Lines
+pub fn coqui_transport_serial::Serial::open(impl core::convert::AsRef<std::path::Path>) -> core::io::error::Result<Self>
+impl coqui_transport::stream::Split for coqui_transport_serial::Serial
+pub type coqui_transport_serial::Serial::Reader = coqui_transport_serial::ReadHalf
+pub type coqui_transport_serial::Serial::Writer = coqui_transport_serial::WriteHalf
+pub fn coqui_transport_serial::Serial::split(self) -> core::io::error::Result<coqui_transport::stream::Halves<coqui_transport_serial::ReadHalf, coqui_transport_serial::WriteHalf>>
+impl core::convert::TryFrom<coqui_transport_serial::SerialParts> for coqui_transport_serial::Serial
+pub type coqui_transport_serial::Serial::Error = core::io::error::Error
+pub fn coqui_transport_serial::Serial::try_from(coqui_transport_serial::SerialParts) -> core::io::error::Result<Self>
+pub struct coqui_transport_serial::SerialBuilder where coqui_transport_serial::SerialSettings: coqui_builder::describe::Describe
+impl coqui_transport_serial::SerialBuilder where coqui_transport_serial::SerialSettings: coqui_builder::describe::Describe
+pub fn coqui_transport_serial::SerialBuilder::build(self) -> core::result::Result<coqui_transport_serial::Serial, coqui_builder::builder::BuildError<<coqui_transport_serial::Serial as core::convert::TryFrom<coqui_transport_serial::SerialParts>>::Error>>
+pub fn coqui_transport_serial::SerialBuilder::fill(self, coqui_builder::partial::Partial<coqui_transport_serial::SerialSettings>) -> Self
+pub fn coqui_transport_serial::SerialBuilder::fill_from(self, &mut impl coqui_builder::source::Source) -> core::result::Result<Self, coqui_builder::fill::FillError>
+pub fn coqui_transport_serial::SerialBuilder::parts(self) -> core::result::Result<coqui_transport_serial::SerialParts, coqui_builder::partial::Missing>
+pub fn coqui_transport_serial::SerialBuilder::path(self, impl core::convert::Into<std::path::PathBuf>) -> Self
+impl coqui_transport_serial::SerialBuilder where coqui_transport_serial::SerialSettings: coqui_builder::describe::Describe
+pub fn coqui_transport_serial::SerialBuilder::new() -> Self
+pub struct coqui_transport_serial::SerialParts
+impl core::convert::TryFrom<coqui_transport_serial::SerialParts> for coqui_transport_serial::Serial
+pub type coqui_transport_serial::Serial::Error = core::io::error::Error
+pub fn coqui_transport_serial::Serial::try_from(coqui_transport_serial::SerialParts) -> core::io::error::Result<Self>
+#[non_exhaustive] pub struct coqui_transport_serial::SerialSettings
+pub coqui_transport_serial::SerialSettings::baud_rate: u32
+pub coqui_transport_serial::SerialSettings::data_bits: coqui_transport_serial::DataBits
+pub coqui_transport_serial::SerialSettings::discard_input: bool
+pub coqui_transport_serial::SerialSettings::dtr: core::option::Option<bool>
+pub coqui_transport_serial::SerialSettings::flow_control: coqui_transport_serial::FlowControl
+pub coqui_transport_serial::SerialSettings::parity: coqui_transport_serial::Parity
+pub coqui_transport_serial::SerialSettings::rts: core::option::Option<bool>
+pub coqui_transport_serial::SerialSettings::stop_bits: coqui_transport_serial::StopBits
+pub coqui_transport_serial::SerialSettings::transceiver: coqui_transport_serial::Transceiver
+pub coqui_transport_serial::SerialSettings::wake: core::time::Duration
+pub coqui_transport_serial::SerialSettings::write_timeout: core::time::Duration
+impl coqui_transport_serial::SerialSettings
+pub const fn coqui_transport_serial::SerialSettings::new() -> Self
+pub fn coqui_transport_serial::SerialSettings::non_defaults(&self) -> alloc::vec::Vec<coqui_builder::non_default::NonDefault>
+impl core::default::Default for coqui_transport_serial::SerialSettings
+pub fn coqui_transport_serial::SerialSettings::default() -> Self
+pub struct coqui_transport_serial::WriteHalf
+impl core::io::write::Write for coqui_transport_serial::WriteHalf
+pub fn coqui_transport_serial::WriteHalf::flush(&mut self) -> core::io::error::Result<()>
+pub fn coqui_transport_serial::WriteHalf::write(&mut self, &[u8]) -> core::io::error::Result<usize>
